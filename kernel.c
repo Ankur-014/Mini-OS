@@ -2,6 +2,8 @@
 #include "include/kb.h"
 #include "include/string.h"
 #include "include/substr.h"
+#include "include/strint.h"
+
 kmain()
 {
        clearScreen();
@@ -42,9 +44,38 @@ kmain()
 			{
 					clearScreen();
 			}
+			else if(strEql(inp,"len"))
+			{
+				print("Enter string: ");
+				inp = readStr();
+				print("The length of string is: ");
+				printnum(strlength(inp));
+				print("\n");
+			}
 			else if(strEql(inp,"cll"))
 			{
 					clearLine(0,1);
+			}
+			else if(strEql(inp,"cline"))
+			{
+				print("Enter line no: ");
+				inp = readStr();
+				uint8 lineno = (uint8) strToInt(inp, 999);
+				if (lineno < 1 || lineno > cursorY) {
+					print("Line no is out of screen\n");
+					continue;
+				}
+				clearLine(lineno-1, lineno);
+				uint8 i,j;
+				string vidmem = (string)0xb8000; 
+				for (i = lineno-1 +1; i<=cursorY; i++) {
+					for (j = 0; j<sw; j++) {
+						vidmem[((i-1)*sw+j)*2] = vidmem[(i*sw+j)*2];
+						vidmem[((i-1)*sw+j)*2+1] = vidmem[(i*sw+j)*2+1];
+					}
+				}
+				cursorY--;
+				updateCursor();
 			}
 			else if(strEql(inp,"scr"))
 			{
