@@ -13,7 +13,8 @@ kmain()
 	   string password = "1507014";
 	   
 	   string inp = 0;
-	   //string in = 0;
+	   string in = 0;
+	   string in2 = 0;
 	   while (1) {
 		   uint8 uOK = 0, pOK = 0;
 		   
@@ -95,9 +96,14 @@ kmain()
 			}
 			else if(strEql(inp,"upc"))
 			{
-					cursorX=10;
-					cursorY=10;
-					updateCursor();
+				print("Enter X: ");
+				in = readStr();
+				print("Enter Y: ");
+				 in2 = readStr();
+				//uint8 lineno = (uint8) strToInt(inp, 999);
+				cursorX=(uint8) strToInt(in, 999);;
+				cursorY=(uint8) strToInt(in2, 999);;
+				updateCursor();
 			}
 			else if(strEql(inp,"ankur"))
 			{
